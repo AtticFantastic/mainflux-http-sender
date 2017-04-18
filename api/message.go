@@ -50,7 +50,7 @@ func sendMessage(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Print(err)
 	}
-	NatsConn.Publish("mainflux/http/msg", b)
+	NatsConn.Publish("msg.http", b)
 
 	// Send back response to HTTP client
 	// We have accepted the request and published it over MQTT,
