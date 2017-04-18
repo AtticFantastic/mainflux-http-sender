@@ -1,8 +1,8 @@
 # Mainflux HTTP Sender
 
 [![License](https://img.shields.io/badge/license-Apache%20v2.0-blue.svg)](LICENSE)
-[![Build Status](https://travis-ci.org/mainflux/mainflux-cli.svg?branch=master)](https://travis-ci.org/mainflux/mainflux-cli)
-[![Go Report Card](https://goreportcard.com/badge/github.com/Mainflux/mainflux-cli)](https://goreportcard.com/report/github.com/Mainflux/mainflux-cli)
+[![Build Status](https://travis-ci.org/mainflux/mainflux-http-sender.svg?branch=master)](https://travis-ci.org/mainflux/mainflux-http-sender)
+[![Go Report Card](https://goreportcard.com/badge/github.com/mainflux/mainflux-http-sender)](https://goreportcard.com/report/github.com/mainflux/mainflux-http-sender)
 [![Join the chat at https://gitter.im/Mainflux/mainflux](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Mainflux/mainflux?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Mainflux HTTP API for message sending to NATS broker (which emits them to other services).
