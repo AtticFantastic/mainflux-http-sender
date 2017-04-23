@@ -13,7 +13,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/mainflux/mainflux-core/api"
+	"github.com/mainflux/mainflux-http-sender/api"
 )
 
 var ts *httptest.Server
