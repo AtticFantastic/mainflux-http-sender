@@ -18,4 +18,4 @@ RUN cd /go/src/github.com/mainflux/mainflux-http-sender && go install
 ###
 # Run main command with dockerize
 ###
-CMD mainflux-http-sender -n NATS_HOST
+CMD mainflux-http-sender -n $NATS_HOST
