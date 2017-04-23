@@ -12,9 +12,11 @@ import (
 	"flag"
 	"fmt"
 	"github.com/fatih/color"
+	"log"
 	"net/http"
 	"os"
 
+	"github.com/cenkalti/backoff"
 	"github.com/mainflux/mainflux-http-sender/api"
 )
 
@@ -41,9 +43,19 @@ type (
 	}
 )
 
-func main() {
-	opts := Opts{}
+var (
+	opts Opts
+)
 
+func tryNatsConnect() error {
+	var err error
+
+	log.Print("Connecting to NATS... ")
+	err = api.NatsInit(opts.NatsHost, opts.NatsPort)
+	return err
+}
+
+func main() {
 	flag.StringVar(&opts.HTTPHost, "a", "localhost", "HTTP server address.")
 	flag.StringVar(&opts.HTTPPort, "p", "7070", "HTTP server port.")
 	flag.StringVar(&opts.NatsHost, "n", "localhost", "NATS broker address.")
@@ -58,8 +70,12 @@ func main() {
 		os.Exit(0)
 	}
 
-	// NATS
-	api.NatsInit(opts.NatsHost, opts.NatsPort)
+	// Connect to NATS broker
+	if err := backoff.Retry(tryNatsConnect, backoff.NewExponentialBackOff()); err != nil {
+		log.Fatalf("NATS: Can't connect: %v\n", err)
+	} else {
+		log.Println("OK")
+	}
 
 	// Print banner
 	color.Cyan(banner)

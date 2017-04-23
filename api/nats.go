@@ -31,7 +31,7 @@ func NatsInit(host string, port string) error {
 	var err error
 	NatsConn, err = nats.Connect("nats://" + host + ":" + port)
 	if err != nil {
-		log.Fatalf("NATS: Can't connect: %v\n", err)
+		log.Println(err)
 	}
 
 	return err
