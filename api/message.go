@@ -34,6 +34,10 @@ func sendMessage(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	//TODO Handle Content-Type
+	//TODO If is senML validate it
+	//TODO Add ContentType to NatsMsg
+
 	cid := bone.GetValue(r, "channel_id")
 
 	// Publisher ID header
