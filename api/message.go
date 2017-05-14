@@ -39,20 +39,20 @@ func sendMessage(w http.ResponseWriter, r *http.Request) {
 	}
 	// Validate Content-Type
 	ctype, err := resolveContentType(r.Header.Get("Content-Type"))
+	fmt.Println(ctype)
 	if err != nil {
 		// Return content type error
 		w.WriteHeader(http.StatusUnsupportedMediaType)
-		str := `{"response": err}`
+		str := `{"response": "` + err.Error() + `"}`
 		io.WriteString(w, str)
 		return
 	}
-	fmt.Printf(ctype)
 	//If is senML validate it
 	if ctype == "senml+json" {
 		var err error
 		if _, err = senml.Decode(data, senml.JSON); err != nil {
 			w.WriteHeader(http.StatusBadRequest)
-			str := `{"response": err}`
+			str := `{"response": "` + err.Error() + `"}`
 			io.WriteString(w, str)
 			return
 		}
