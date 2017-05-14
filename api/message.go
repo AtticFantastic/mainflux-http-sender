@@ -10,17 +10,21 @@ package api
 
 import (
 	"encoding/json"
+	"errors"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
 
+	"github.com/cisco/senml"
 	"github.com/go-zoo/bone"
 )
 
 // sendMessage function
 func sendMessage(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+	log.Println("niceeeeeeeeeeeeeeeeeeeeee")
 
 	data, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -33,10 +37,24 @@ func sendMessage(w http.ResponseWriter, r *http.Request) {
 		io.WriteString(w, str)
 		return
 	}
-
-	//TODO Handle Content-Type
-	//TODO If is senML validate it
-	//TODO Add ContentType to NatsMsg
+	// Validate Content-Type
+	ctype, err := resolveContentType(r.Header.Get("Content-Type"))
+	if err != nil {
+		// Return content type error
+		w.WriteHeader(http.StatusUnsupportedMediaType)
+		str := `{"response": err}`
+		io.WriteString(w, str)
+	}
+	fmt.Printf(ctype)
+	//If is senML validate it
+	if ctype == "senml+json" {
+		var err error
+		if _, err = senml.Decode(data, senml.JSON); err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			str := `{"response": err}`
+			io.WriteString(w, str)
+		}
+	}
 
 	cid := bone.GetValue(r, "channel_id")
 
@@ -49,6 +67,8 @@ func sendMessage(w http.ResponseWriter, r *http.Request) {
 	m.Publisher = hdr
 	m.Protocol = "http"
 	m.Payload = data
+	// Add ContentType to NatsMsg
+	m.ContentType = ctype
 
 	b, err := json.Marshal(m)
 	if err != nil {
@@ -62,4 +82,16 @@ func sendMessage(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusAccepted)
 	str := `{"response": "message sent"}`
 	io.WriteString(w, str)
+}
+
+func resolveContentType(content string) (result string, err error) {
+
+	switch content {
+	case "application/senml+json":
+		return "senml+json", nil
+	case "application/octet-stream":
+		return "octet-stream", nil
+	}
+	return "", errors.New("Unsuproted Content-Type")
+
 }

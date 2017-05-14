@@ -11,13 +11,14 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/fatih/color"
 	"log"
 	"net/http"
 	"os"
 
+	"github.com/fatih/color"
+
 	"github.com/cenkalti/backoff"
-	"github.com/mainflux/mainflux-http-sender/api"
+	"github.com/nmarcetic/mainflux-http-sender/api"
 )
 
 const (
@@ -51,7 +52,7 @@ func tryNatsConnect() error {
 	var err error
 
 	log.Print("Connecting to NATS... ")
-	err = api.NatsInit(opts.NatsHost, opts.NatsPort)
+	//err = api.NatsInit(opts.NatsHost, opts.NatsPort)
 	return err
 }
 
@@ -88,8 +89,8 @@ func main() {
 var banner = `
 ┌┬┐┌─┐┬┌┐┌┌─┐┬  ┬ ┬─┐ ┬   ┬ ┬┌┬┐┌┬┐┌─┐
 │││├─┤││││├┤ │  │ │┌┴┬┘───├─┤ │  │ ├─┘
-┴ ┴┴ ┴┴┘└┘└  ┴─┘└─┘┴ └─   ┴ ┴ ┴  ┴ ┴  
-                                      
+┴ ┴┴ ┴┴┘└┘└  ┴─┘└─┘┴ └─   ┴ ┴ ┴  ┴ ┴
+
     == Industrial IoT System ==
 
     Made with <3 by Mainflux Team
