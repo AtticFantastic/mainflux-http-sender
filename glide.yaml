@@ -4,6 +4,7 @@ import:
   version: ^1.0.0
 - package: github.com/codegangsta/negroni
   version: ^0.2.0
+- package: github.com/cisco/senml
 - package: github.com/fatih/color
   version: ^1.4.1
 - package: github.com/go-zoo/bone
