@@ -1,0 +1,19 @@
+{
+	"comment": "",
+	"ignore": "",
+	"package": [
+		{
+			"checksumSHA1": "wq7gLAWjpBskpGdyj0Hajv3Pk+o=",
+			"path": "github.com/cisco/senml",
+			"revision": "157479c25a2fcba03d0eb9d5bb237a079e4a07cb",
+			"revisionTime": "2016-08-05T21:02:12Z"
+		},
+		{
+			"checksumSHA1": "TjT0gxkY8JQ7JLDlCb72vqcl/50=",
+			"path": "github.com/ugorji/go/codec",
+			"revision": "708a42d246822952f38190a8d8c4e6b16a0e600c",
+			"revisionTime": "2017-03-12T11:21:14Z"
+		}
+	],
+	"rootPath": "github.com/nmarcetic/mainflux-http-sender"
+}
