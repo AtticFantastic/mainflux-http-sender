@@ -49,7 +49,7 @@ func sendMessage(w http.ResponseWriter, r *http.Request) {
 		var err error
 		if _, err = senml.Decode(data, senml.JSON); err != nil {
 			w.WriteHeader(http.StatusBadRequest)
-			str := `{"response": "` + err.Error() + `"}`
+			str := `{"response": "senML validation faild"}`
 			io.WriteString(w, str)
 			return
 		}
