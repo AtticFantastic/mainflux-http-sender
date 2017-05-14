@@ -44,6 +44,7 @@ func sendMessage(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusUnsupportedMediaType)
 		str := `{"response": err}`
 		io.WriteString(w, str)
+		return
 	}
 	fmt.Printf(ctype)
 	//If is senML validate it
@@ -53,6 +54,7 @@ func sendMessage(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusBadRequest)
 			str := `{"response": err}`
 			io.WriteString(w, str)
+			return
 		}
 	}
 

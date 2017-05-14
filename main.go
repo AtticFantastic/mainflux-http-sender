@@ -18,7 +18,7 @@ import (
 	"github.com/fatih/color"
 
 	"github.com/cenkalti/backoff"
-	"github.com/mainflux/mainflux-http-sender/api"
+	"github.com/nmarcetic/mainflux-http-sender/api"
 )
 
 const (
