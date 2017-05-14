@@ -11,10 +11,11 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/fatih/color"
 	"log"
 	"net/http"
 	"os"
+
+	"github.com/fatih/color"
 
 	"github.com/cenkalti/backoff"
 	"github.com/mainflux/mainflux-http-sender/api"
@@ -88,8 +89,8 @@ func main() {
 var banner = `
 ┌┬┐┌─┐┬┌┐┌┌─┐┬  ┬ ┬─┐ ┬   ┬ ┬┌┬┐┌┬┐┌─┐
 │││├─┤││││├┤ │  │ │┌┴┬┘───├─┤ │  │ ├─┘
-┴ ┴┴ ┴┴┘└┘└  ┴─┘└─┘┴ └─   ┴ ┴ ┴  ┴ ┴  
-                                      
+┴ ┴┴ ┴┴┘└┘└  ┴─┘└─┘┴ └─   ┴ ┴ ┴  ┴ ┴
+
     == Industrial IoT System ==
 
     Made with <3 by Mainflux Team

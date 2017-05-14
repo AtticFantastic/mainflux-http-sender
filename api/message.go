@@ -10,11 +10,13 @@ package api
 
 import (
 	"encoding/json"
+	"errors"
 	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
 
+	"github.com/cisco/senml"
 	"github.com/go-zoo/bone"
 )
 
@@ -33,6 +35,25 @@ func sendMessage(w http.ResponseWriter, r *http.Request) {
 		io.WriteString(w, str)
 		return
 	}
+	// Validate Content-Type
+	ctype, err := resolveContentType(r.Header.Get("Content-Type"))
+	if err != nil {
+		// Return content type error
+		w.WriteHeader(http.StatusUnsupportedMediaType)
+		str := `{"response": "` + err.Error() + `"}`
+		io.WriteString(w, str)
+		return
+	}
+	//If is senML validate it
+	if ctype == "senml+json" {
+		var err error
+		if _, err = senml.Decode(data, senml.JSON); err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			str := `{"response": "senML validation faild"}`
+			io.WriteString(w, str)
+			return
+		}
+	}
 
 	cid := bone.GetValue(r, "channel_id")
 
@@ -45,6 +66,8 @@ func sendMessage(w http.ResponseWriter, r *http.Request) {
 	m.Publisher = hdr
 	m.Protocol = "http"
 	m.Payload = data
+	// Add ContentType to NatsMsg
+	m.ContentType = ctype
 
 	b, err := json.Marshal(m)
 	if err != nil {
@@ -58,4 +81,16 @@ func sendMessage(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusAccepted)
 	str := `{"response": "message sent"}`
 	io.WriteString(w, str)
+}
+
+func resolveContentType(content string) (result string, err error) {
+
+	switch content {
+	case "application/senml+json":
+		return "senml+json", nil
+	case "application/octet-stream":
+		return "octet-stream", nil
+	}
+	return "", errors.New("Unsuproted Content-Type")
+
 }

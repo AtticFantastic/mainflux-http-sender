@@ -9,16 +9,18 @@
 package api
 
 import (
-	"github.com/nats-io/go-nats"
 	"log"
+
+	"github.com/nats-io/go-nats"
 )
 
 type (
 	NatsMsg struct {
-		Channel   string `json:"channel"`
-		Publisher string `json:"publisher"`
-		Protocol  string `json:"protocol"`
-		Payload   []byte `json:"payload"`
+		Channel     string `json:"channel"`
+		Publisher   string `json:"publisher"`
+		Protocol    string `json:"protocol"`
+		Payload     []byte `json:"payload"`
+		ContentType string `json:"content_type"`
 	}
 )
 

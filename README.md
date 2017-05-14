@@ -18,9 +18,9 @@ and then compile it and install the binary in `$GOBIN` directory.
 
 Now you can run the program with:
 ```
-mainflux-influxdb
+mainflux-http-sender
 ```
-if `$GOBIN` is in `$PATH` (otherwise use `$GOBIN/mainflux-influxdb`)
+if `$GOBIN` is in `$PATH` (otherwise use `$GOBIN/mainflux-http-sender`)
 
 ### Documentation
 Development documentation can be found [here](http://mainflux.io/).
