@@ -11,7 +11,6 @@ package api
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
@@ -24,7 +23,6 @@ import (
 // sendMessage function
 func sendMessage(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
-	log.Println("niceeeeeeeeeeeeeeeeeeeeee")
 
 	data, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -39,7 +37,6 @@ func sendMessage(w http.ResponseWriter, r *http.Request) {
 	}
 	// Validate Content-Type
 	ctype, err := resolveContentType(r.Header.Get("Content-Type"))
-	fmt.Println(ctype)
 	if err != nil {
 		// Return content type error
 		w.WriteHeader(http.StatusUnsupportedMediaType)

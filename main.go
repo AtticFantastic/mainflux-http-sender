@@ -18,7 +18,7 @@ import (
 	"github.com/fatih/color"
 
 	"github.com/cenkalti/backoff"
-	"github.com/nmarcetic/mainflux-http-sender/api"
+	"github.com/mainflux/mainflux-http-sender/api"
 )
 
 const (
@@ -52,7 +52,7 @@ func tryNatsConnect() error {
 	var err error
 
 	log.Print("Connecting to NATS... ")
-	//err = api.NatsInit(opts.NatsHost, opts.NatsPort)
+	err = api.NatsInit(opts.NatsHost, opts.NatsPort)
 	return err
 }
 
