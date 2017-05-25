@@ -1,0 +1,104 @@
+swagger: '2.0'
+
+info:
+  title: Mainflux HTTP Sender API
+  description: Mainflux IoT platform HTTP messaging API.
+  version: "1.0.0"
+
+schemes:
+  - http
+  - https
+
+consumes:
+  - application/senml+json
+  - application/octet-stream
+
+produces:
+  - application/json
+
+paths:
+  /status:
+    get:
+      summary: Service health check.
+      description: |
+        The endpoint returns information about the service status, i.e. whether
+        or not it is capable to respond to any incoming request.
+      tags:
+        - Status
+      responses:
+        200:
+          description: Service is alive and able to respond to new requests.
+          schema:
+            $ref: '#/definitions/HealthCheck'
+        500:
+          description: Service cannot fulfill any further requests.
+  /channels/{channel_id}/messages:
+    post:
+      summary: Sends SenML or binary blob message - depends on Content-Type.
+      description: |
+        Send message to the channel.
+      tags:
+        - Messages
+      parameters:
+        - name: channel_id
+          in: path
+          required: true
+          type: integer
+          description: Channel Id.
+        - name: entry
+          in: body
+          required: true
+          description: SenML.
+          schema:
+            $ref: '#/definitions/SenML'
+      responses:
+        200:
+          description: Message sent OK.
+        400:
+          description: Missing or invalid username and/or password.
+        500:
+          description: Service is unable to fulfill the request.
+
+ definitions:
+  HealthCheck:
+    type: object
+    required:
+      - status
+    properties:
+      status:
+        type: string
+        enum:
+          - OK
+        description: Simple string indicating that the service is alive.
+  SenML:
+    type: array
+    items:
+      properties:
+        bn:
+          type: string
+        bt:
+          type: number
+        bu:
+          type: string
+        bver:
+          type: number
+        l:
+          type: string
+        n:
+          type: string
+        u:
+          type: string
+        t:
+          type: number
+        ut:
+          type: number
+        v:
+          type: number
+        vs:
+          type: string
+        vd:
+          type: string
+        vb:
+          type: boolean
+        s:
+          type: number
