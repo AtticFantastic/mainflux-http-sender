@@ -57,9 +57,9 @@ func tryNatsConnect() error {
 }
 
 func main() {
-	flag.StringVar(&opts.HTTPHost, "a", "localhost", "HTTP server address.")
+	flag.StringVar(&opts.HTTPHost, "a", "0.0.0.0", "HTTP server address.")
 	flag.StringVar(&opts.HTTPPort, "p", "7070", "HTTP server port.")
-	flag.StringVar(&opts.NatsHost, "n", "localhost", "NATS broker address.")
+	flag.StringVar(&opts.NatsHost, "n", "0.0.0.0", "NATS broker address.")
 	flag.StringVar(&opts.NatsPort, "q", "4222", "NATS broker port.")
 	flag.BoolVar(&opts.Help, "h", false, "Show help.")
 	flag.BoolVar(&opts.Help, "help", false, "Show help.")
