@@ -19,7 +19,7 @@ ADD . .
 RUN CGO_ENABLED=0 GOOS=linux go build -ldflags "-s" -a -installsuffix cgo
 
 ###
-# Secont stage - Executer
+# Second stage - Executer
 ###
 FROM alpine:latest
 WORKDIR /var/mainflux
