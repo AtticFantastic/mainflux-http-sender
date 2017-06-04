@@ -27,6 +27,7 @@ env:
   - DOCKERTEST_BIND_LOCALHOST=true
 
 after_success:
+  - docker --version  # document the version travis is using
   - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
   - export REPO=mainflux/mainflux-http-sender
   - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
