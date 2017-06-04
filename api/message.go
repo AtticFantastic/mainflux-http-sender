@@ -11,7 +11,6 @@ package api
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
@@ -75,8 +74,6 @@ func sendMessage(w http.ResponseWriter, r *http.Request) {
 	m.Payload = data
 	// Add ContentType to NatsMsg
 	m.ContentType = cleanContentType(ctype)
-
-	fmt.Printf(m.ContentType)
 
 	b, err := json.Marshal(m)
 	if err != nil {
