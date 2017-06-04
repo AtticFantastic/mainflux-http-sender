@@ -15,9 +15,15 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strings"
 
 	"github.com/cisco/senml"
 	"github.com/go-zoo/bone"
+)
+
+const (
+	senMl string = "application/senml+json"
+	blob  string = "application/octet-stream"
 )
 
 // sendMessage function
@@ -36,7 +42,7 @@ func sendMessage(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	// Validate Content-Type
-	ctype, err := resolveContentType(r.Header.Get("Content-Type"))
+	ctype, err := validateContentType(r.Header.Get("Content-Type"))
 	if err != nil {
 		// Return content type error
 		w.WriteHeader(http.StatusUnsupportedMediaType)
@@ -45,7 +51,7 @@ func sendMessage(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	//If is senML validate it
-	if ctype == "senml+json" {
+	if ctype == senMl {
 		var err error
 		if _, err = senml.Decode(data, senml.JSON); err != nil {
 			w.WriteHeader(http.StatusBadRequest)
@@ -67,7 +73,7 @@ func sendMessage(w http.ResponseWriter, r *http.Request) {
 	m.Protocol = "http"
 	m.Payload = data
 	// Add ContentType to NatsMsg
-	m.ContentType = ctype
+	m.ContentType = cleanContentType(ctype)
 
 	b, err := json.Marshal(m)
 	if err != nil {
@@ -83,14 +89,16 @@ func sendMessage(w http.ResponseWriter, r *http.Request) {
 	io.WriteString(w, str)
 }
 
-func resolveContentType(content string) (result string, err error) {
+func cleanContentType(ct string) string {
+	return strings.Split(ct, "/")[1]
+}
+
+func validateContentType(content string) (result string, err error) {
 
 	switch content {
-	case "application/senml+json":
-		return "senml+json", nil
-	case "application/octet-stream":
-		return "octet-stream", nil
+	case blob, senMl:
+		return content, nil
 	}
-	return "", errors.New("Unsuproted Content-Type")
+	return content, errors.New("Unsuproted Content-Type")
 
 }
