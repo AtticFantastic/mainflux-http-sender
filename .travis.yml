@@ -23,8 +23,7 @@ services:
 # In Travis, we need to bind to 127.0.0.1 in order to get a working connection. This environment variable
 # tells dockertest to do that.
 env:
-  global:
-    - COMMIT=${TRAVIS_COMMIT::8}
+  - COMMIT=${TRAVIS_COMMIT::8}
   - DOCKERTEST_BIND_LOCALHOST=true
 
 after_success:
