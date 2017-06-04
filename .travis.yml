@@ -23,15 +23,5 @@ services:
 # In Travis, we need to bind to 127.0.0.1 in order to get a working connection. This environment variable
 # tells dockertest to do that.
 env:
-  - COMMIT=${TRAVIS_COMMIT::8}
   - DOCKERTEST_BIND_LOCALHOST=true
 
-after_success:
-  - docker --version  # document the version travis is using
-  - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-  - export REPO=mainflux/mainflux-http-sender
-  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
-  - docker build -f Dockerfile -t $REPO:$COMMIT .
-  - docker tag $REPO:$COMMIT $REPO:$TAG
-  - docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER
-  - docker push $REPO:$TAG
