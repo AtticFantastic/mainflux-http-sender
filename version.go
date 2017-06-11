@@ -12,6 +12,5 @@ var (
 	Time      string      // Build time in UTC (year/month/day hour:min:sec)
 	Revision  string      // SHA-1 of this build (git rev-parse)
 	Platform  = fmt.Sprintf("%s %s", runtime.GOOS, runtime.GOARCH)
-	Version   = "unknown" // Version of the release, to be read from VERSION file
 	GoVersion = runtime.Version()
 )

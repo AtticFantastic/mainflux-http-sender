@@ -77,7 +77,6 @@ func main() {
 		fmt.Fprintf(tw, "Platform:     %s\n", Platform)
 		fmt.Fprintf(tw, "Go Version:   %s\n", GoVersion)
 		fmt.Fprintf(tw, "Build SHA-1:  %s\n", Revision)
-		fmt.Fprintf(tw, "Version:      %s\n", Version)
 		tw.Flush()
 		os.Exit(0)
 	}
