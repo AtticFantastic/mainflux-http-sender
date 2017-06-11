@@ -4,13 +4,9 @@ SHELL := /bin/bash
 REV := $(shell git rev-parse HEAD)
 TAG := 123
 
-
 # Target
 TARGET := http-sender
 VERSION := $(shell cat VERSION)
-
-OS := linux
-ARCH := amd64
 
 # LDFLAGS
 LDFLAGS := -s -w -extldflags "-static"

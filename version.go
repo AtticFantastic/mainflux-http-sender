@@ -5,10 +5,6 @@ import (
 	"runtime"
 )
 
-// TimeFormat is the reference format for build.Time. Make sure it stays in sync
-// with the string passed to the linker in the root Makefile.
-const TimeFormat = "2006/01/02 15:04:05"
-
 var (
 	// These variables are initialized via the linker -X flag in the
 	// top-level Makefile when compiling release binaries.
