@@ -71,14 +71,13 @@ func main() {
 	flag.Parse()
 
 	if opts.Version {
-		info := GetInfo()
 		tw := tabwriter.NewWriter(os.Stdout, 2, 1, 2, ' ', 0)
-		fmt.Fprintf(tw, "Build Tag:    %s\n", info.Tag)
-		fmt.Fprintf(tw, "Build Time:   %s\n", info.Time)
-		fmt.Fprintf(tw, "Platform:     %s\n", info.Platform)
-		fmt.Fprintf(tw, "Go Version:   %s\n", info.GoVersion)
-		fmt.Fprintf(tw, "C Compiler:   %s\n", info.CgoCompiler)
-		fmt.Fprintf(tw, "Build SHA-1:  %s\n", info.Revision)
+		fmt.Fprintf(tw, "Build Tag:    %s\n", Tag)
+		fmt.Fprintf(tw, "Build Time:   %s\n", Time)
+		fmt.Fprintf(tw, "Platform:     %s\n", Platform)
+		fmt.Fprintf(tw, "Go Version:   %s\n", GoVersion)
+		fmt.Fprintf(tw, "Build SHA-1:  %s\n", Revision)
+		fmt.Fprintf(tw, "Version:      %s\n", Version)
 		tw.Flush()
 		os.Exit(0)
 	}

@@ -14,13 +14,13 @@ ARCH := amd64
 
 # LDFLAGS
 LDFLAGS := -s -w -extldflags "-static"
-LDFLAGS += 	-X "main.tag=$(TAG)" \
-			-X "main.utcTime=$(shell date -u '+%Y/%m/%d %H:%M:%S')" \
-			-X "main.rev=$(REV)" \
-			-X "main.version=$(VERSION)"
+LDFLAGS += 	-X "main.Tag=$(TAG)" \
+			-X "main.Time=$(shell date -u '+%Y/%m/%d %H:%M:%S')" \
+			-X "main.Revision=$(REV)" \
+			-X "main.Version=$(VERSION)"
 
 build:
-	go build -v \
+	CGO_ENABLED=0 go build -v \
 		-ldflags '$(LDFLAGS)' \
 	   	-o "$(TARGET)" .
 
