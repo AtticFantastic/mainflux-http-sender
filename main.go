@@ -14,6 +14,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"text/tabwriter"
 
 	"github.com/fatih/color"
 
@@ -40,7 +41,8 @@ type (
 		NatsHost string
 		NatsPort string
 
-		Help bool
+		Help    bool
+		Version bool
 	}
 )
 
@@ -61,10 +63,25 @@ func main() {
 	flag.StringVar(&opts.HTTPPort, "p", "7070", "HTTP server port.")
 	flag.StringVar(&opts.NatsHost, "n", "0.0.0.0", "NATS broker address.")
 	flag.StringVar(&opts.NatsPort, "q", "4222", "NATS broker port.")
+	flag.BoolVar(&opts.Version, "version", false, "Print version information.")
+	flag.BoolVar(&opts.Version, "v", false, "Print version information.")
 	flag.BoolVar(&opts.Help, "h", false, "Show help.")
 	flag.BoolVar(&opts.Help, "help", false, "Show help.")
 
 	flag.Parse()
+
+	if opts.Version {
+		info := GetInfo()
+		tw := tabwriter.NewWriter(os.Stdout, 2, 1, 2, ' ', 0)
+		fmt.Fprintf(tw, "Build Tag:    %s\n", info.Tag)
+		fmt.Fprintf(tw, "Build Time:   %s\n", info.Time)
+		fmt.Fprintf(tw, "Platform:     %s\n", info.Platform)
+		fmt.Fprintf(tw, "Go Version:   %s\n", info.GoVersion)
+		fmt.Fprintf(tw, "C Compiler:   %s\n", info.CgoCompiler)
+		fmt.Fprintf(tw, "Build SHA-1:  %s\n", info.Revision)
+		tw.Flush()
+		os.Exit(0)
+	}
 
 	if opts.Help {
 		fmt.Printf("%s\n", help)
